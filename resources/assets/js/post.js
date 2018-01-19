@@ -22,7 +22,24 @@ post_type.alias.forEach(a => {
 post_type.custom.forEach(a => {
     defaults['custom'][a.slug] = a.default;
 });
-
+let newPost = {
+    title: defaults.title,
+    sub_title: defaults.sub_title,
+    post_type_id: 3, // 3 for misc
+    slug: defaults.slug,
+    content: defaults.content,
+    meta_title: '',
+    meta_description: '',
+    meta_keywords: '',
+    view: defaults.view,
+    images: [],
+    is_published: defaults.is_published,
+    is_featured: defaults.is_featured,
+    custom: [],
+    tags: [],
+    post_type: null,
+    event_on: null
+};
 const app = new Vue({
     el: '#post-app',
     data: {
@@ -30,24 +47,7 @@ const app = new Vue({
         post_types: typeof post_types === 'undefined' ? [] : post_types,
         templates: typeof templates === 'undefined' ? [] : templates,
         tags: typeof tags === 'undefined' ? [] : tags,
-        post: typeof post === 'undefined' ? {
-            title: defaults.title,
-            sub_title: defaults.sub_title,
-            post_type_id: 3, // 3 for misc
-            slug: defaults.slug,
-            content: defaults.content,
-            meta_title: '',
-            meta_description: '',
-            meta_keywords: '',
-            view: defaults.view,
-            images: [],
-            is_published: defaults.is_published,
-            is_featured: defaults.is_featured,
-            custom: [],
-            tags: [],
-            post_type: null,
-            event_on: null
-        } : post,
+        post: typeof post === 'undefined' ? newPost : Object.assign({}, newPost, post),
         new_image: {
             pivot: {
                 slug: ''

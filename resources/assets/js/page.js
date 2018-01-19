@@ -14,28 +14,28 @@ import ImageSelector from './components/ImageSelector.vue';
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+let newPage = {
+    title: '',
+    sub_title: '',
+    slug: '',
+    content: '',
+    meta_title: '',
+    meta_description: '',
+    meta_keywords: '',
+    page_id: '',
+    is_published: false,
+    view: 'default',
+    images: [],
+    formatted: false,
+    custom: []
+};
 
 const app = new Vue({
     el: '#page-app',
     data: {
         pages: typeof pages === 'undefined' ? [] : pages,
         templates: typeof templates === 'undefined' ? [] : templates,
-        page: typeof page === 'undefined' ? {
-            title: '',
-            sub_title: '',
-            slug: '',
-            content: '',
-            meta_title: '',
-            meta_description: '',
-            meta_keywords: '',
-            page_id: '',
-            is_published: false,
-            view: 'default',
-            images: [],
-            formatted: false,
-            custom: []
-        } : page,
-
+        page: typeof page === 'undefined' ? newPage : Object.assign({}, newPage, page),
         new_image: {
             pivot: {
                 slug: ''
