@@ -12,23 +12,23 @@ import ImageSelector from './components/ImageSelector.vue';
  * the post. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-user.image = user.image ? user.image : {thumbnail: null};
 
+let newUser = {
+    name: '',
+    username: '',
+    email: '',
+    is_active: false,
+    roles:[],
+    image: {
+        thumbnail: null
+    }
+};
 const app = new Vue({
     el: '#user-app',
     data: {
         roles: typeof rolesArr === 'undefined' ? false: rolesArr,
         changePassword: false,
-        user: typeof user === 'undefined' ? {
-            name: '',
-            username: '',
-            email: '',
-            is_active: false,
-            roles:[],
-            image: {
-                thumbnail: null
-            }
-        } : user
+        user: typeof user === 'undefined' ? newUser : Object.assign({}, user),
     },
     mounted() {
     },
