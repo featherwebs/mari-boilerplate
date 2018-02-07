@@ -17,6 +17,9 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title">Insert Images</h4>
+						<a class="fw-close" href="javascript:void(0);" @click="closeModal(true)">
+							&times;
+						</a>
 					</div>
 					<div class="modal-body" v-if="loading">
 						Loading...
@@ -24,7 +27,7 @@
 					<div class="modal-body" v-if="!loading">
 						<div>
 							<!-- Nav tabs -->
-							<ul class="nav nav-pills" role="tablist">
+							<ul class="nav nav-pills fw-nav" role="tablist">
 								<li role="presentation"
 									class="active"><a href="#select-image" data-toggle="tab"
 													  @click="mode='select'">Media
@@ -93,24 +96,23 @@
 								</div>
 							</div>
 							<div v-if="mode=='upload'">
-								<label :for="fileid" class="mdl-button">Select a file</label>
+								<label :for="fileid" class="fw-upload">Select a file</label>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="mdl-button mdl-button--colored pull-right"
-							@click="closeModal(false)" v-if="imageSelected || base64">
-						Use Selected Image
-					</button>
-					<button type="button" class="mdl-button mdl-button--colored pull-right mdl-color-text--red"
-							@click="closeModal(true)">
-						Cancel
-					</button>
+					<div class="modal-footer">
+						<button type="button" class="mdl-button mdl-button--colored pull-right"
+										@click="closeModal(false)" v-if="imageSelected || base64">
+							Use Selected Image
+						</button>
+						<button type="button" class="mdl-button mdl-button--colored pull-right mdl-color-text--red"
+										@click="closeModal(true)">
+							Cancel
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </template>
 
@@ -229,7 +231,7 @@
 	}
 
 	.modal-body {
-		height: 600px;
+		height: 400px;
 		overflow-y: scroll;
 	}
 
@@ -238,5 +240,28 @@
 	}
 	.img-previews img.active {
 		border: 1px solid #677efe;
+	}
+
+	.fw-upload {
+		width: 100%;
+		border: 2px dashed black;
+		display: block;
+		text-align: center;
+		padding: 100px;
+		font-size: 20px;
+		cursor: pointer;
+		font-weight: normal;
+	}
+
+	.fw-nav {
+		padding: 15px 0;
+	}
+
+	.fw-close {
+		position: absolute;
+		right: 15px;
+		padding: 10px;
+		top: 15px;
+		font-size: 29px;
 	}
 </style>

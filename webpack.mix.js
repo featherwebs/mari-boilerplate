@@ -10,6 +10,13 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.setPublicPath('vendor');
+mix.js('resources/assets/js/page.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/post.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/user.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/menu.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/submenu.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/role.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/post-type.js', '/featherwebs/mari/src/public/js/dist')
+    .js('resources/assets/js/setting.js', '/featherwebs/mari/src/public/js/dist')
+;
