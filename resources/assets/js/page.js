@@ -29,13 +29,13 @@ let newPage = {
     formatted: false,
     custom: []
 };
-
+const createMode = typeof page === 'undefined';
 const app = new Vue({
     el: '#page-app',
     data: {
         pages: typeof pages === 'undefined' ? [] : pages,
         templates: typeof templates === 'undefined' ? [] : templates,
-        page: typeof page === 'undefined' ? newPage : Object.assign({}, newPage, page),
+        page: createMode ? newPage : Object.assign({}, newPage, page),
         new_image: {
             pivot: {
                 slug: ''
@@ -74,7 +74,8 @@ const app = new Vue({
     },
     watch: {
         'page.title': function (value) {
-            this.page.slug = this.slugify(value)
+            if(createMode)
+                this.page.slug = this.slugify(value)
         },
         'page.slug': function (value) {
             this.page.slug = this.slugify(value)

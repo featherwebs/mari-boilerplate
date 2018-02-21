@@ -5,11 +5,11 @@
 			Add Image
 		</button>
 		<div v-if="mode=='select'">
-			<input type="hidden" :name="name" :value="imageSelected ? imageSelected.id: ''" />
+			<input type="hidden" :name="name" :value="imageSelected ? imageSelected.id: value" />
 		</div>
 		<div v-if="mode=='upload'">
 			<input type="file" class="hidden" id="image-selector" :name="fileName ? fileName : name"
-				   accept="image/jpeg,image/png,image/bmp" @change="showPreview($event)"
+				   accept="image/jpeg,image/png,image/bmp,image/gif" @change="showPreview($event)"
 				   :id="fileid" />
 		</div>
 		<div class="modal-mask" v-show="modalVisible">
@@ -42,6 +42,7 @@
 									<div class="col-sm-9">
 										<div class="row" v-for="chunk in lodash.chunk(images, 6)">
 											<div class="col-sm-2 img-previews" v-for="image in chunk"
+												 @dblclick="closeModal(false, image)"
 												 @click="toggleSelectedImage(image)">
 												<img :src="image.thumbnail" class="img-responsive"
 													 :class="{'active': imageSelected == image}" />
@@ -102,11 +103,11 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="mdl-button mdl-button--colored pull-right"
-										@click="closeModal(false)" v-if="imageSelected || base64">
+								@click="closeModal(false)" v-if="imageSelected || base64">
 							Use Selected Image
 						</button>
 						<button type="button" class="mdl-button mdl-button--colored pull-right mdl-color-text--red"
-										@click="closeModal(true)">
+								@click="closeModal(true)">
 							Cancel
 						</button>
 					</div>
@@ -122,7 +123,7 @@
 
     export default {
         name: 'image-selector',
-        props: ['name', 'fileName', 'id'],
+        props: ['name', 'fileName', 'id', 'value'],
         data() {
             return {
                 fileid: '',
@@ -136,17 +137,17 @@
                 base64: null
             };
         },
-		mounted() {
+        mounted() {
             if(this.id)
                 this.fileid = this.id;
             else
                 this.fileid = this.getRandom();
-		},
-		watch: {
+        },
+        watch: {
             base64 : function() {
-				this.closeModal(false);
+                this.closeModal(false);
             }
-		},
+        },
         methods: {
             onChange() {
                 let html = this.instance.getData();
@@ -160,7 +161,10 @@
             onFocus() {
                 this.$emit('focus', this.instance);
             },
-            closeModal(cancel) {
+            closeModal(cancel, selectImage) {
+                if(selectImage) {
+                    this.imageSelected = selectImage;
+                }
                 if (cancel) {
                     this.mode = '';
                 } else {
@@ -179,10 +183,10 @@
                 $('.modal-mask').detach().appendTo('body');
                 axios.post('/api/media').then(({data}) => {
                     p.images = data;
+                p.loading = false;
+            }).catch((err) => {
                     p.loading = false;
-                }).catch((err) => {
-                    p.loading = false;
-                });
+            });
             },
             doNotCloseModal(e) {
                 e.stopPropagation();

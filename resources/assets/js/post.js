@@ -40,6 +40,7 @@ let newPost = {
     post_type: null,
     event_on: null
 };
+const createMode = typeof post === 'undefined';
 const app = new Vue({
     el: '#post-app',
     data: {
@@ -47,7 +48,7 @@ const app = new Vue({
         post_types: typeof post_types === 'undefined' ? [] : post_types,
         templates: typeof templates === 'undefined' ? [] : templates,
         tags: typeof tags === 'undefined' ? [] : tags,
-        post: typeof post === 'undefined' ? newPost : Object.assign({}, newPost, post),
+        post: createMode ? newPost : Object.assign({}, newPost, post),
         new_image: {
             pivot: {
                 slug: ''
@@ -101,7 +102,8 @@ const app = new Vue({
     },
     watch: {
         'post.title': function (value) {
-            this.post.slug = this.slugify(value)
+            if(createMode)
+                this.post.slug = this.slugify(value)
         },
         'post.slug': function (value) {
             this.post.slug = this.slugify(value)
