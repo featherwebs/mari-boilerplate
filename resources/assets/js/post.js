@@ -137,7 +137,10 @@ const app = new Vue({
         },
         addImageField(slug) {
             this.post.images.push(Object.assign({}, this.new_image, {pivot:{slug},slug, type:'multiple-images'}));
-        }
+        },
+        removeImageField(obj) {
+            this.post.images = this.post.images.filter(i => i !== obj);
+        },
     },
     components: {
         Ckeditor,
