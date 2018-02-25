@@ -17,7 +17,7 @@ import ImageSelector from './components/ImageSelector.vue';
 
 let defaults = {custom:{}};
 post_type.alias.forEach(a => {
-    defaults[a.slug] = a.default;
+    defaults[a.slug] = a.default; 
 });
 post_type.custom.forEach(a => {
     defaults['custom'][a.slug] = a.default;
@@ -84,7 +84,7 @@ const app = new Vue({
     },
     mounted() {
         if (this.post_type) {
-            this.post_type.custom.filter(c => c.type != 'image').map(field => {
+            this.post_type_non_images.map(field => {
                 if (!this.post.custom.filter(c => c.slug == field.slug).length) {
                     let obj = Object.assign({}, field);
                     obj.value = defaults.custom[field.slug];
@@ -92,7 +92,7 @@ const app = new Vue({
                 }
             });
 
-            this.post_type.custom.filter(c => c.type == 'image').map(field => {
+            this.post_type_images.map(field => {
                 if (!this.post.images.filter(c => c.slug == field.slug || (c.pivot && (c.pivot.slug == field.slug))).length) {
                     field.thumbnail = null;
                     this.post.images.push(Object.assign({}, field));
@@ -112,6 +112,18 @@ const app = new Vue({
             this.post.post_type = this.post_types.find(pt => pt.id == value);
         }
     },
+    computed: {
+        'post_type_images': function() {
+            if(this.post_type)
+                return this.post_type.custom.filter(pt => pt.type == 'image' || pt.type == 'multiple-images');
+            return [];    
+        },
+        'post_type_non_images': function() {
+            if(this.post_type)
+                return this.post_type.custom.filter(pt => pt.type != 'image' && pt.type != 'multiple-images');
+            return [];
+        }
+    },
     methods: {
         slugify(text) {
             return text.toString().toLowerCase()
@@ -122,6 +134,9 @@ const app = new Vue({
                 .replace(/^-+/, '')             // Trim - from start of text
                 .replace(/-+$/, '')             // Trim - from end of text
                 .replace(/-$/, '');             // Remove last -
+        },
+        addImageField(slug) {
+            this.post.images.push(Object.assign({}, this.new_image, {pivot:{slug},slug, type:'multiple-images'}));
         }
     },
     components: {

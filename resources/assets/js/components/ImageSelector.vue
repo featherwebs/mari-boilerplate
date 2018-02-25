@@ -2,7 +2,7 @@
 	<div>
 		<button type="button" class="mdl-button mdl-js-button" @click="openModal">
 			<i class="material-icons">perm_media</i>
-			Add Image
+			Replace Image
 		</button>
 		<div v-if="mode=='select'">
 			<input type="hidden" :name="name" :value="imageSelected ? imageSelected.id: value" />

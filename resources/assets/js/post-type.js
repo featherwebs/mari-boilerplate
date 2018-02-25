@@ -22,6 +22,9 @@ const app = new Vue({
         } : post_type,
         custom_types: [
             {
+                'title': 'Multiple Images',
+                'slug': 'multiple-images'
+            }, {
                 'title': 'Image',
                 'slug': 'image'
             }, {
