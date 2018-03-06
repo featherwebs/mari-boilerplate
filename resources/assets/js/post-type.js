@@ -20,6 +20,7 @@ const app = new Vue({
             custom: [],
             alias: []
         } : post_type,
+        post_types: typeof post_types === 'undefined' ? []: post_types,
         custom_types: [
             {
                 'title': 'Multiple Images',
@@ -42,6 +43,9 @@ const app = new Vue({
             }, {
                 'title': 'Select',
                 'slug': 'select'
+            }, {
+                'title': 'Post Type',
+                'slug': 'post-type'
             }
         ],
         aliases: [

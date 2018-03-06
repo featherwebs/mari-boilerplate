@@ -46,6 +46,7 @@ const app = new Vue({
     data: {
         post_type: typeof post_type === 'undefined' ? null : post_type,
         post_types: typeof post_types === 'undefined' ? [] : post_types,
+        posts: typeof posts === 'undefined' ? [] : posts,
         templates: typeof templates === 'undefined' ? [] : templates,
         tags: typeof tags === 'undefined' ? [] : tags,
         post: createMode ? newPost : Object.assign({}, newPost, post),
@@ -84,13 +85,22 @@ const app = new Vue({
     },
     mounted() {
         if (this.post_type) {
-            this.post_type_non_images.map(field => {
-                if (!this.post.custom.filter(c => c.slug == field.slug).length) {
-                    let obj = Object.assign({}, field);
-                    obj.value = defaults.custom[field.slug];
-                    this.post.custom.push(obj);
+            let customData = [];
+
+            this.post_type_non_images.every(field => {
+
+
+                if(this.post.custom.length) {
+                    this.post.custom.every(postCustom => {
+                        if(field.slug == postCustom.slug)
+                            customData.push(Object.assign(field, postCustom, {id: field.id})); // id to preserve custom_field id in case of post_type type
+                    });
+                } else {
+                    customData.push(Object.assign(field));
                 }
             });
+
+            this.post.custom = customData;
 
             this.post_type_images.map(field => {
                 if (!this.post.images.filter(c => c.slug == field.slug || (c.pivot && (c.pivot.slug == field.slug))).length) {
