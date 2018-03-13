@@ -66,7 +66,8 @@ const app = new Vue({
             },
             full: {
                 allowedContent: true,
-                height: 500
+                height: 500,
+                extraPlugins: 'divarea'
             }
         }
     },
