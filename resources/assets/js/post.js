@@ -88,11 +88,9 @@ const app = new Vue({
         if (this.post_type) {
             let customData = [];
 
-            this.post_type_non_images.every(field => {
-
-
+            this.post_type_non_images.map(field => {
                 if(this.post.custom.length) {
-                    this.post.custom.every(postCustom => {
+                    this.post.custom.map(postCustom => {
                         if(field.slug == postCustom.slug)
                             customData.push(Object.assign(field, postCustom, {id: field.id})); // id to preserve custom_field id in case of post_type type
                     });
