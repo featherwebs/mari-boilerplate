@@ -1,3 +1,5 @@
+import draggable from "vuedraggable";
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -18,12 +20,21 @@ const app = new Vue({
         menu: typeof menu === 'undefined' ? {
             title: '',
             slug: '',
-            custom: []
+            sub_menus: []
         }: menu,
-        customField: {
-            value: '',
-            slug: ''
-        }
+        pages: pages,
+        sub_menu: {
+            title: 'Untitled',
+            url: '',
+            type: 'custom'
+        },
+        types: {
+            'page': 'Page',
+            'post': 'Post',
+            'custom': 'Custom'
+        },
+        postTypes: postTypes,
+        posts: posts
     },
     mounted() {
     },
@@ -33,13 +44,16 @@ const app = new Vue({
         }
     },
     methods: {
-        addCustomField() {
-            let newCustomField = Object.assign({}, this.customField);
-            this.menu.custom.push(newCustomField);
+        addSubMenu() {
+            let newSubMenu = Object.assign({}, this.sub_menu);
+            this.menu.sub_menus.push(newSubMenu);
         },
-        removeCustomField(i) {
-            this.menu.custom.splice(i, 1);
+        removeSubMenu(i) {
+            this.menu.sub_menus.splice(i, 1);
         }
+    },
+    components: {
+        draggable
     }
 
 });
