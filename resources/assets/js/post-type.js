@@ -46,6 +46,9 @@ const app = new Vue({
             }, {
                 'title': 'Post Type',
                 'slug': 'post-type'
+            }, {
+                'title': 'File',
+                'slug': 'file'
             }
         ],
         aliases: [

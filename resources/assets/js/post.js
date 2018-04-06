@@ -80,7 +80,11 @@ const app = new Vue({
             full: {
                 allowedContent: true,
                 height: 500,
-                extraPlugins: 'divarea'
+                extraPlugins: 'divarea,oembed,image2',
+                filebrowserImageBrowseUrl: '/mari-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/mari-filemanager/upload?type=Images&_token=',
+                filebrowserBrowseUrl: '/mari-filemanager?type=Files',
+                filebrowserUploadUrl: '/mari-filemanager/upload?type=Files&_token='
             }
         }
     },
