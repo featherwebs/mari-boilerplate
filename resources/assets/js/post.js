@@ -73,9 +73,14 @@ const app = new Vue({
                     {"name": "styles", "groups": ["styles"]},
                     {"name": "about", "groups": ["about"]}
                 ],
+                extraPlugins: 'divarea,oembed,image2',
                 allowedContent: true,
                 removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar',
-                height: 250
+                height: 250,
+                filebrowserImageBrowseUrl: '/mari-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/mari-filemanager/upload?type=Images&_token=',
+                filebrowserBrowseUrl: '/mari-filemanager?type=Files',
+                filebrowserUploadUrl: '/mari-filemanager/upload?type=Files&_token='
             },
             full: {
                 allowedContent: true,

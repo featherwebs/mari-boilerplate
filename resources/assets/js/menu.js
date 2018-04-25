@@ -21,11 +21,13 @@ const app = new Vue({
             title: '',
             slug: '',
             sub_menus: []
-        }: menu,
+        } : menu,
         pages: pages,
-        sub_menu: {
+        new_sub_menu: {
+            order: '',
             title: 'Untitled',
             url: '',
+            sub_menus: [],
             type: 'custom'
         },
         types: {
@@ -44,12 +46,26 @@ const app = new Vue({
         }
     },
     methods: {
-        addSubMenu() {
-            let newSubMenu = Object.assign({}, this.sub_menu);
-            this.menu.sub_menus.push(newSubMenu);
+        addSubMenu(addto) {
+            if (!addto)
+                addto = this.menu;
+            let order = 0;
+            addto.sub_menus.map(item => {
+                if (order < item.order)
+                    order = item.order;
+            });
+            addto.sub_menus.push({...this.new_sub_menu, sub_menus: [], order: order + 1});
         },
-        removeSubMenu(i) {
-            this.menu.sub_menus.splice(i, 1);
+        removeSubMenu(i, removeFrom) {
+            if (!removeFrom)
+                removeFrom = this.menu;
+            removeFrom.sub_menus.splice(i, 1);
+        },
+        swap(arr, from, to) {
+            console.log(arr, from, to);
+            let tmp = arr[to]['order'];
+            arr[to]['order'] = arr[from]['order'];
+            arr[from]['order'] = tmp;
         }
     },
     components: {
