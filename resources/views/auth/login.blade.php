@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>{{ fw_setting('title') }}: Login</title>
+    <title>{{ fw_setting('title') }}: Admin Login</title>
 
     <!-- Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -67,7 +67,7 @@
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary login-button">Login</button>
-                        <a href="#" class="back-to-shaligram">back to shaligram</a>
+                        <a href="{{ url('/') }}">Back to {{ fw_setting('title') }}</a>
                     </form>
 
                 </aside>
@@ -99,4 +99,3 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 </body>
 </html>
-
