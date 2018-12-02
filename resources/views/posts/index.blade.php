@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="dummy-nav dummy"></div>
+
     <div class="container">
         <h1>{!! $title !!}</h1>
         <div class="row event-details">
@@ -9,7 +11,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-xs-5">
                             <figure>
-                                <img class="img-responsive" src="{!! fw_thumbnail($post, 265, 220) !!}" alt="{!! $post->title !!}">
+                                <img class="img-responsive" src="{{ fw_thumbnail($post, 265, 220) }}" alt="{{ $post->title }}">
                             </figure>
                         </div>
                         <div class="col-sm-12 col-xs-7">

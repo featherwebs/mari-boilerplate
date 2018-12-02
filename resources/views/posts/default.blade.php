@@ -1,42 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <section id="single__blog">
-        <div class="single__blog--banner">
-            <div class="container">
-                <header class="jumbo__header">
-                    <h1>{!! $post->title !!}</h1>
-                    <div class="sb__date--wrapper jumbo__header--date">
-                        <p>{!! $post->created_at ? $post->created_at->format('M d Y'): '' !!}</p>
-                        <p>{!! estimated_reading_time($post) !!} read</p>
+    <section class="academics-wrapper margin-bottom-fix">
+        <div class="container-fluid">
+            <div class="row">
+                <div id="myCarousel" class="carousel media carousel-fade" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        @forelse(fw_posts_by_category('slider') as $media)
+                            @if($image = $media->images()->first())
+                                <div class="item{{ $loop->first ? ' active': '' }}">
+                                    <img class="img-responsive" src="{{ $image->getThumbnail(1905, 708) }}" alt="{{ $media->title }}">
+                                    <h2>{{ $media->title }}</h2>
+                                    @if($media->sub_title)
+                                        <h3>{{ $media->sub_title }}</h3>
+                                    @endif
+                                </div>
+                            @endif
+                        @empty
+                            <div class="item active">
+                                <img class="img-responsive" src="http://via.placeholder.com/1905x708?text=[banner]" alt="">
+                            </div>
+                        @endforelse
                     </div>
-                </header>
-
-            </div>
-            <figure class="single__blog--bannerimg">
-                <img src="{!! fw_thumbnail($post, 1905) !!}" alt="{!! $post->title !!}">
-            </figure>
-        </div>
-        <div class="single__blog--desc--wrapper">
-            <div class="container">
-                <div>
-                    {!! $post->content !!}
-                </div>
-                <div class="tag__contents--wrapper">
-                    <ul class="tag__contents">
-                        @foreach($post->tags as $tag)
-                            <li><a href="{!! route('tag', $tag) !!}">{!! $tag->title !!}</a></li>
-                        @endforeach
-                    </ul>
-                    <div class="social__contents">
-                        <a href="mailto:?subject={!! fw_meta_title($post) !!}body={!! request()->url() !!}" class="s_sl"><img src="{!! asset('images/linkshare.svg') !!}" alt="linkshare"></a>
-                        <a href="https://twitter.com/intent/tweet/?url={!! request()->url() !!}" class="s_tweet" target="_blank"><img src="{!! asset('images/twitter.svg') !!}" alt="tweeter"></a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={!! request()->url() !!}" class="s_fb" target="_blank"><img src="{!! asset('images/facebook.svg') !!}" alt="facebook"></a>
-                    </div>
+                    <div class="banner_overlay"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    @include('partials.blogs')
+    <section class="academics-descriptions margin-bottom-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>{!! $post->title !!}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {!! $post->content !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

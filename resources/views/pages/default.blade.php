@@ -8,11 +8,11 @@
                     <div class="carousel-inner" role="listbox">
                         @forelse(fw_posts_by_category('slider') as $media)
                             @if($image = $media->images()->first())
-                                <div class="item{!! $loop->first ? ' active': '' !!}">
-                                    <img class="img-responsive" src="{!! $image->getThumbnail(1905, 708) !!}" alt="{!! $media->title !!}">
-                                    <h2>{!! $media->title !!}</h2>
+                                <div class="item{{ $loop->first ? ' active': '' }}">
+                                    <img class="img-responsive" src="{{ $image->getThumbnail(1905, 708) }}" alt="{{ $media->title }}">
+                                    <h2>{{ $media->title }}</h2>
                                     @if($media->sub_title)
-                                        <h3>{!! $media->sub_title !!}</h3>
+                                        <h3>{{ $media->sub_title }}</h3>
                                     @endif
                                 </div>
                             @endif

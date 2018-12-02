@@ -1,51 +1,52 @@
-<section id="card__banner">
-  <div class="container">
-    <div class="cardbanner__main">
-      <ul id="elasticstack" class="elasticstack">
-        @foreach(fw_posts_by_category('blog', 3, true)->featured()->get() as $slider)
-          <li>
-            <div class="cb__contents">
-              <figure>
-                  <img src="{!! fw_thumbnail($slider, 425) !!}" alt="{!! $slider->title !!}">
-              </figure>
-              <div class="cb__desc">
-                <div class="cb__desc--center">
-                  <a href="{!! route('post', $slider) !!}">
-                    <h5>{!! $slider->title !!}</h5>
-                  </a>
-                  <p>
-                    {!! str_limit(strip_tags($slider->content), 200)  !!}
-                  </p>
+<!-- Carousel
+    ================================================== -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        @forelse(fw_posts_by_category('slider') as $slide)
+            @if($image = $slide->images()->first())
+                <li data-target="#myCarousel" data-slide-to="0" class="{{ $loop->iteration == 1 ? 'active':'' }}"></li>
+            @endif
+        @empty
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        @endforelse
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        @forelse(fw_posts_by_category('slider') as $slide)
+            @if($image = $slide->images()->first())
+                <div class="item{{ $loop->iteration == 1 ? ' active':'' }}">
+                    <img class="first-slide" src="{{ $image->getThumbnail(1900, 500) }}" alt="{{ $slide->title }}">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>{{ $slide->title }}</h1>
+                            <p>
+                                {{ $slide->sub_title }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            @endif
+        @empty
+            <div class="item active">
+                <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Example headline.</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus aut ea eius harum id, unde ut voluptatem. At nihil reprehenderit vel! Doloremque facere fugiat nostrum quis reiciendis velit voluptates.
+                        </p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                    </div>
+                </div>
             </div>
-          </li>
-        @endforeach
-			</ul>
+        @endforelse
     </div>
-    <a href="javascript:void(0);" class="elastistack__trigger--js btn d-none d-lg-block">Next</a>
-  </div>
-</section>
-
-@push('scripts')
-    <script>
-    	var scroll = new SmoothScroll('a[href*="#"]');
-      var elastic = new ElastiStack( document.getElementById( 'elasticstack' ), {
-        // distDragBack: if the user stops dragging the image in a area that does not exceed [distDragBack]px
-        // for either x or y then the image goes back to the stack
-        distDragBack : 200,
-        // distDragMax: if the user drags the image in a area that exceeds [distDragMax]px
-        // for either x or y then the image moves away from the stack
-        distDragMax : 400,
-        // callback
-        onUpdateStack : function( current ) {
-          $('.cardbannerslide--desc').removeClass('active');
-          $('.cardbannerslide--desc:eq('+current+')').addClass('active');
-        }
-      });
-      
-      $(document).on('click', '.elastistack__trigger--js', function() {
-        elastic.next();
-      });
-    </script>
-@endpush
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div><!-- /.carousel -->

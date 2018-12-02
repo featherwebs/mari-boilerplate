@@ -23,11 +23,6 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 Route::get('/post/{post}', '\Featherwebs\Mari\Controllers\PostController@show')->name('post');
-Route::get('/category/{post}', '\Featherwebs\Mari\Controllers\PostController@show')->name('category');
-Route::get('/blog/{post}', '\Featherwebs\Mari\Controllers\PostController@show')->name('blog');
-Route::get('/story/{post}', '\Featherwebs\Mari\Controllers\PostController@show')->name('story');
-Route::get('/series/{post}', '\Featherwebs\Mari\Controllers\PostController@show')->name('series');
-Route::get('/tag/{tag}', '\Featherwebs\Mari\Controllers\PostController@showTag')->name('tag');
 
 Route::get('/post', '\Featherwebs\Mari\Controllers\PostController@archive')->name('post.index');
 Route::post('/contact', 'HomeController@contact')->name('contact');
