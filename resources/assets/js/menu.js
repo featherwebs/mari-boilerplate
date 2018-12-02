@@ -62,7 +62,6 @@ const app = new Vue({
             removeFrom.sub_menus.splice(i, 1);
         },
         swap(arr, from, to) {
-            console.log(arr, from, to);
             let tmp = arr[to]['order'];
             arr[to]['order'] = arr[from]['order'];
             arr[from]['order'] = tmp;
