@@ -1,4 +1,4 @@
-import draggable from "vuedraggable";
+// import draggable from "vuedraggable";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -6,7 +6,7 @@ import draggable from "vuedraggable";
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -68,7 +68,7 @@ const app = new Vue({
         }
     },
     components: {
-        draggable
+        // draggable
     }
 
 });

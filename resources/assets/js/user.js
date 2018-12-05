@@ -4,8 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-
 import ImageSelector from './components/ImageSelector.vue';
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,6 +16,7 @@ let newUser = {
     username: '',
     email: '',
     is_active: false,
+    role: null,
     roles:[],
     image: {
         thumbnail: null
@@ -28,9 +27,11 @@ const app = new Vue({
     data: {
         roles: typeof rolesArr === 'undefined' ? false: rolesArr,
         changePassword: false,
-        user: typeof user === 'undefined' ? newUser : Object.assign({}, user),
+        user: typeof user === 'undefined' ? newUser : Object.assign(newUser, user),
     },
     mounted() {
+        if(this.roles.length)
+            this.user.role = this.roles.find(r => r.id == user.roles[0]['id']).id;
     },
     watch: {
         'user.username': function (value) {
