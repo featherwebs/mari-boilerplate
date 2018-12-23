@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1da589f646d38048e2093e55b710379e",
+    "content-hash": "0cd3d4559b91e28f2d86c3c8cd9e7140",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -548,16 +548,16 @@
         },
         {
             "name": "featherwebs/mari",
-            "version": "v1.0.6",
+            "version": "v1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/featherwebs/mari.git",
-                "reference": "d92d0281029656bade5fc9dc9454f54c2fa53648"
+                "reference": "2285d42339017b54b5ca96ffd1fa946eab3cfba6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/featherwebs/mari/zipball/d92d0281029656bade5fc9dc9454f54c2fa53648",
-                "reference": "d92d0281029656bade5fc9dc9454f54c2fa53648",
+                "url": "https://api.github.com/repos/featherwebs/mari/zipball/2285d42339017b54b5ca96ffd1fa946eab3cfba6",
+                "reference": "2285d42339017b54b5ca96ffd1fa946eab3cfba6",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 "cms",
                 "laravel"
             ],
-            "time": "2018-12-02T10:53:55+00:00"
+            "time": "2018-12-13T06:31:45+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -1553,16 +1553,16 @@
         },
         {
             "name": "php-http/guzzle6-adapter",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/guzzle6-adapter.git",
-                "reference": "1e170d98db60780e399bced9a368151401f11b4c"
+                "reference": "6074a4b1f4d5c21061b70bab3b8ad484282fe31f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/guzzle6-adapter/zipball/1e170d98db60780e399bced9a368151401f11b4c",
-                "reference": "1e170d98db60780e399bced9a368151401f11b4c",
+                "url": "https://api.github.com/repos/php-http/guzzle6-adapter/zipball/6074a4b1f4d5c21061b70bab3b8ad484282fe31f",
+                "reference": "6074a4b1f4d5c21061b70bab3b8ad484282fe31f",
                 "shasum": ""
             },
             "require": {
@@ -1578,7 +1578,8 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "php-http/client-integration-tests": "^2.0"
+                "php-http/client-integration-tests": "^2.0",
+                "phpunit/phpunit": "^7.4"
             },
             "type": "library",
             "extra": {
@@ -1611,7 +1612,7 @@
                 "Guzzle",
                 "http"
             ],
-            "time": "2018-11-14T09:52:08+00:00"
+            "time": "2018-12-16T14:44:03+00:00"
         },
         {
             "name": "php-http/httplug",
