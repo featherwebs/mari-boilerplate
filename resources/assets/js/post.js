@@ -6,6 +6,7 @@
 
 import Ckeditor from './components/Ckeditor.vue';
 import ImageSelector from './components/ImageSelector.vue';
+import MapLocationSelector from './components/MapLocationSelector.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -102,7 +103,10 @@ const app = new Vue({
               customData.push(Object.assign(field, postCustom, {id: field.id})); // id to preserve custom_field id in case of post_type type
           });
         } else {
-          customData.push(Object.assign(field));
+          if(field.slug == 'map')
+          customData.push({...field, value: ','});
+          else
+          customData.push({...field, value: ''});
         }
       });
 
@@ -157,9 +161,13 @@ const app = new Vue({
     removeImageField(obj) {
       this.post.images = this.post.images.filter(i => i !== obj);
     },
+    locationupdated(latlng, field) {
+      field.value = latlng.lng+','+latlng.lat;
+    }
   },
   components: {
     Ckeditor,
-    ImageSelector
+    ImageSelector,
+    MapLocationSelector
   }
 });
