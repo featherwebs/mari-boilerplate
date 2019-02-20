@@ -39,6 +39,9 @@ const app = new Vue({
                 'title': 'Date',
                 'slug': 'date'
             }, {
+                'title': 'Time',
+                'slug': 'time'
+            }, {
                 'title': 'Select',
                 'slug': 'select'
             }, {
@@ -47,6 +50,9 @@ const app = new Vue({
             }, {
                 'title': 'File',
                 'slug': 'file'
+            }, {
+                'title': 'Map',
+                'slug': 'map'
             }
         ],
         aliases: [
