@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Listeners\ImageDeleted;
-use App\Listeners\ImageRenamed;
-use App\Listeners\ImageUploaded;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use UniSharp\LaravelFilemanager\Events\ImageIsDeleting;
@@ -24,13 +21,13 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\EventListener',
         ],
         ImageWasUploaded::class => [
-            ImageUploaded::class,
+            \Featherwebs\Mari\Listeners\ImageUploaded::class,
         ],
         ImageIsRenaming::class => [
-            ImageRenamed::class
+            \Featherwebs\Mari\Listeners\ImageRenamed::class
         ],
         ImageWasDeleted::class => [
-            ImageDeleted::class
+            \Featherwebs\Mari\Listeners\ImageDeleted::class
         ],
     ];
 

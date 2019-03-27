@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cd3d4559b91e28f2d86c3c8cd9e7140",
+    "content-hash": "817907e86043beaa5b8c974b91a7f08f",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -548,16 +548,16 @@
         },
         {
             "name": "featherwebs/mari",
-            "version": "v1.1.4",
+            "version": "1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/featherwebs/mari.git",
-                "reference": "2285d42339017b54b5ca96ffd1fa946eab3cfba6"
+                "reference": "83b3e6680abdc5d805e2b57fd2718b20942da6f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/featherwebs/mari/zipball/2285d42339017b54b5ca96ffd1fa946eab3cfba6",
-                "reference": "2285d42339017b54b5ca96ffd1fa946eab3cfba6",
+                "url": "https://api.github.com/repos/featherwebs/mari/zipball/83b3e6680abdc5d805e2b57fd2718b20942da6f7",
+                "reference": "83b3e6680abdc5d805e2b57fd2718b20942da6f7",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 "cms",
                 "laravel"
             ],
-            "time": "2018-12-13T06:31:45+00:00"
+            "time": "2019-03-27T12:57:11+00:00"
         },
         {
             "name": "fideloper/proxy",
