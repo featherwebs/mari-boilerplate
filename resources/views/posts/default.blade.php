@@ -14,7 +14,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            {!! $post->content !!}
+                            {!! $post->renderContent() !!}
                         </div>
                     </div>
                 </div>

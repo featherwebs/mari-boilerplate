@@ -14,7 +14,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12">
-              {!! $page->content !!}
+              {!! $page->renderContent() !!}
             </div>
           </div>
         </div>
