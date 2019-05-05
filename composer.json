@@ -6,13 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "featherwebs/mari": "dev-master",
+        "featherwebs/mari": "1.2.2",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "php-http/guzzle6-adapter": "^2.0",
-        "php-http/message": "^1.7",
-        "van-ons/laraberg": "^0.0.1@beta"
+        "php-http/message": "^1.7"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -60,5 +59,6 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    }
+    },
+    "minimum-stability": "dev"
 }
