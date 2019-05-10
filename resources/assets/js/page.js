@@ -47,34 +47,8 @@ const app = new Vue({
     deleted_image_ids: [],
 
     editor: {
-      mini: {
-        toolbarGroups: [
-          {"name": "basicstyles", "groups": ["basicstyles"]},
-          {"name": "links", "groups": ["links"]},
-          {"name": "paragraph", "groups": ["list", "blocks"]},
-          {"name": "document", "groups": ["mode"]},
-          {"name": "insert", "groups": ["insert"]},
-          {"name": "styles", "groups": ["styles"]},
-          {"name": "about", "groups": ["about"]}
-        ],
-        allowedContent: true,
-        removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar',
-        height: 250,
-        extraPlugins: 'divarea,oembed,image2',
-        filebrowserImageBrowseUrl: '/mari-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/mari-filemanager/upload?type=Images&_token=',
-        filebrowserBrowseUrl: '/mari-filemanager?type=Files',
-        filebrowserUploadUrl: '/mari-filemanager/upload?type=Files&_token='
-      },
-      full: {
-        allowedContent: true,
-        height: 500,
-        extraPlugins: 'divarea,oembed,image2,justify,templates',
-        filebrowserImageBrowseUrl: '/mari-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/mari-filemanager/upload?type=Images&_token=',
-        filebrowserBrowseUrl: '/mari-filemanager?type=Files',
-        filebrowserUploadUrl: '/mari-filemanager/upload?type=Files&_token='
-      }
+      allowedContent: true,
+      height: 500
     }
   },
   mounted() {

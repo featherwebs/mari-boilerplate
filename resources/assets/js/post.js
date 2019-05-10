@@ -14,7 +14,7 @@ import MapLocationSelector from './components/MapLocationSelector.vue';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-let defaults = {custom:{}};
+let defaults = {custom: {}};
 post_type.alias.forEach(a => {
   defaults[a.slug] = a.default;
 });
@@ -62,34 +62,8 @@ const app = new Vue({
     },
     deleted_image_ids: [],
     editor: {
-      mini: {
-        toolbarGroups: [
-          {"name": "basicstyles", "groups": ["basicstyles"]},
-          {"name": "links", "groups": ["links"]},
-          {"name": "paragraph", "groups": ["list", "blocks"]},
-          {"name": "document", "groups": ["mode"]},
-          {"name": "insert", "groups": ["insert"]},
-          {"name": "styles", "groups": ["styles"]},
-          {"name": "about", "groups": ["about"]}
-        ],
-        extraPlugins: 'divarea,oembed,image2',
-        allowedContent: true,
-        removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar',
-        height: 250,
-        filebrowserImageBrowseUrl: '/mari-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/mari-filemanager/upload?type=Images&_token=',
-        filebrowserBrowseUrl: '/mari-filemanager?type=Files',
-        filebrowserUploadUrl: '/mari-filemanager/upload?type=Files&_token='
-      },
-      full: {
-        allowedContent: true,
-        height: 500,
-        extraPlugins: 'divarea,oembed,image2,justify,templates',
-        filebrowserImageBrowseUrl: '/mari-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/mari-filemanager/upload?type=Images&_token=',
-        filebrowserBrowseUrl: '/mari-filemanager?type=Files',
-        filebrowserUploadUrl: '/mari-filemanager/upload?type=Files&_token='
-      }
+      allowedContent: true,
+      height: 500
     }
   },
   mounted() {
@@ -97,16 +71,16 @@ const app = new Vue({
       let customData = [];
 
       this.post_type_non_images.map(field => {
-        if(this.post.custom.length) {
+        if (this.post.custom.length) {
           this.post.custom.map(postCustom => {
-            if(field.slug == postCustom.slug)
+            if (field.slug == postCustom.slug)
               customData.push(Object.assign(field, postCustom, {id: field.id})); // id to preserve custom_field id in case of post_type type
           });
         } else {
-          if(field.slug == 'map')
-          customData.push({...field, value: ','});
+          if (field.slug == 'map')
+            customData.push({...field, value: ','});
           else
-          customData.push({...field, value: ''});
+            customData.push({...field, value: ''});
         }
       });
 
@@ -122,7 +96,7 @@ const app = new Vue({
   },
   watch: {
     'post.title': function (value) {
-      if(createMode)
+      if (createMode)
         this.post.slug = this.slugify(value)
     },
     'post.slug': function (value) {
@@ -133,13 +107,13 @@ const app = new Vue({
     }
   },
   computed: {
-    'post_type_images': function() {
-      if(this.post_type)
+    'post_type_images': function () {
+      if (this.post_type)
         return this.post_type.custom.filter(pt => pt.type == 'image' || pt.type == 'multiple-images');
       return [];
     },
-    'post_type_non_images': function() {
-      if(this.post_type)
+    'post_type_non_images': function () {
+      if (this.post_type)
         return this.post_type.custom.filter(pt => pt.type != 'image' && pt.type != 'multiple-images');
       return [];
     }
@@ -156,13 +130,13 @@ const app = new Vue({
         .replace(/-$/, '');             // Remove last -
     },
     addImageField(slug) {
-      this.post.images.push(Object.assign({}, this.new_image, {pivot:{slug},slug, type:'multiple-images'}));
+      this.post.images.push(Object.assign({}, this.new_image, {pivot: {slug}, slug, type: 'multiple-images'}));
     },
     removeImageField(obj) {
       this.post.images = this.post.images.filter(i => i !== obj);
     },
     locationupdated(latlng, field) {
-      field.value = latlng.lng+','+latlng.lat;
+      field.value = latlng.lng + ',' + latlng.lat;
     }
   },
   components: {
