@@ -1,4 +1,4 @@
-// import draggable from "vuedraggable";
+import draggable from "vuedraggable";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -68,7 +68,6 @@ const app = new Vue({
         }
     },
     components: {
-        // draggable
+        draggable,
     }
-
 });

@@ -74,7 +74,7 @@ const app = new Vue({
         if (this.post.custom.length) {
           this.post.custom.map(postCustom => {
             if (field.slug == postCustom.slug)
-              customData.push(Object.assign(field, postCustom, {id: field.id})); // id to preserve custom_field id in case of post_type type
+              customData.push({...field, ...postCustom, id: field.id, title: field.title}); // id to preserve custom_field id in case of post_type type
           });
         } else {
           if (field.slug == 'map')
@@ -130,10 +130,10 @@ const app = new Vue({
         .replace(/-$/, '');             // Remove last -
     },
     addImageField(slug) {
-      this.post.images.push(Object.assign({}, this.new_image, {pivot: {slug}, slug, type: 'multiple-images'}));
+      this.post.images.push(Object.assign({}, this.new_image, {pivot: {slug}, slug, type: 'multiple-images', id: Math.random().toString(36).substring(6)}));
     },
     removeImageField(obj) {
-      this.post.images = this.post.images.filter(i => i !== obj);
+      this.post.images = this.post.images.filter(i => i.id !== obj.id);
     },
     locationupdated(latlng, field) {
       field.value = latlng.lng + ',' + latlng.lat;
