@@ -1,9 +1,7 @@
 <template>
 	<div>
-		<div v-if="type== 'file'" class="thumbnail" :id="'holder-file-wrapper-'+id" :data-input="'thumbnail-'+id" :data-preview="'holder-'+id">
-			<i :id="'holder-file-'+id" class="fa fa-file-o fa-5x" v-if="type == 'file'"></i>
-		</div>
-		<div v-else class="thumbnail" :id="'holder-wrapper-'+id" :data-input="'thumbnail-'+id" :data-preview="'holder-'+id">
+		<div v-if="type!='file'" class="thumbnail" :id="'holder-wrapper-'+id" :data-input="'thumbnail-'+id"
+				 :data-preview="'holder-'+id">
 			<img :id="'holder-'+id" :src="value">
 		</div>
 		<div class="input-group">
@@ -34,13 +32,13 @@
       };
     },
     mounted() {
-      // if (typeof this.value == 'string') {
-      //   this.img = this.value;
-      // } else if (this.value && typeof this.value == 'object' && this.value.path) {
-      //   this.img = this.value.url;
-      // } else if (this.type != 'file') {
-      //   this.img = this.def;
-      // }
+      if (typeof this.value == 'string') {
+        this.img = this.value;
+      } else if (this.value && typeof this.value == 'object' && this.value.path) {
+        this.img = this.value.url;
+      } else if (this.type != 'file') {
+        this.img = this.def;
+      }
       $('#btn-' + this.id).filemanager('image');
       $('#btn-file-' + this.id).filemanager('file');
       $('#holder-wrapper-' + this.id).filemanager('image');
