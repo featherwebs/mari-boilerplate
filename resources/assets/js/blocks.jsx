@@ -350,7 +350,7 @@ Laraberg.registerCategory('Featherwebs', 'fw');
           <img
             src={src}
             aria-hidden="true"
-            className={"fw-image-container__item "+className}
+            className={"fw-image-container__item " + className}
           />
         );
       };

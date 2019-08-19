@@ -23,6 +23,7 @@
         "babel-preset-stage-0": "^6.24.1"
     },
     "dependencies": {
+        "classnames": "^2.2.6",
         "vuedraggable": "^2.16.0"
     }
 }

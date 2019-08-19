@@ -18,5 +18,5 @@ mix.js('resources/assets/js/page.js', '/featherwebs/mari/src/public/js/dist')
   .js('resources/assets/js/role.js', '/featherwebs/mari/src/public/js/dist')
   .js('resources/assets/js/post-type.js', '/featherwebs/mari/src/public/js/dist')
   .js('resources/assets/js/setting.js', '/featherwebs/mari/src/public/js/dist')
-  .react('resources/assets/js/blocks.jsx', 'public/js');
+  .react('resources/assets/js/blocks.jsx', 'public/js')
 ;

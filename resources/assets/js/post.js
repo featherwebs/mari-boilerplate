@@ -35,12 +35,14 @@ let newPost = {
   is_published: defaults.is_published,
   is_featured: defaults.is_featured,
   custom: [],
+  posts: [],
   tags: [],
   post_type: null,
   event_on: null
 };
 const createMode = typeof post === 'undefined';
-const app = new Vue({
+
+window.postapp = new Vue({
   el: '#post-app',
   data: {
     post_type: typeof post_type === 'undefined' ? null : post_type,
@@ -116,7 +118,7 @@ const app = new Vue({
       if (this.post_type)
         return this.post_type.custom.filter(pt => pt.type != 'image' && pt.type != 'multiple-images');
       return [];
-    }
+    },
   },
   methods: {
     slugify(text) {
@@ -130,13 +132,28 @@ const app = new Vue({
         .replace(/-$/, '');             // Remove last -
     },
     addImageField(slug) {
-      this.post.images.push(Object.assign({}, this.new_image, {pivot: {slug}, slug, type: 'multiple-images', id: Math.random().toString(36).substring(6)}));
+      this.post.images.push(Object.assign({}, this.new_image, {
+        pivot: {slug},
+        slug,
+        type: 'multiple-images',
+        id: Math.random().toString(36).substring(6)
+      }));
     },
     removeImageField(obj) {
       this.post.images = this.post.images.filter(i => i.id !== obj.id);
     },
     locationupdated(latlng, field) {
       field.value = latlng.lng + ',' + latlng.lat;
+    },
+    addPostsRelation(slug, id, multiple) {
+      var relatedPost = this.posts.find(p => p.id == id);
+      if (multiple)
+        this.post.posts = [...this.post.posts, {...relatedPost, pivot: {slug}}];
+      else
+        this.post.posts = [...this.post.posts.filter(p => p.pivot.slug != slug), {...relatedPost, pivot: {slug}}]
+    },
+    removePostsRelation(slug, id) {
+      this.post.posts = this.post.posts.filter(p => p.pivot.slug == slug && p.id != id);
     }
   },
   components: {
