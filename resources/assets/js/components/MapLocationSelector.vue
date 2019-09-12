@@ -15,24 +15,32 @@
 <script>
   export default {
     props: {
-      latitude: {
-        type: Number,
-        default: 27.686884587085057
+      lnglat: {
+        type: String,
+        default: ''
       },
-      longitude: {
-        type: Number,
-        default: 85.34427752591353
-      }
     },
     data() {
       return {
-        lat: this.latitude,
-        lng: this.longitude,
+        lat: null,
+        lng: null,
       }
     },
     mounted() {
+      let data = [];
+      if (this.lnglat)
+        data = this.lnglat.split(',');
+
+      if (data.length > 0) {
+        this.lng = Number(data[1]);
+        this.lat = Number(data[0]);
+      } else {
+        this.lat = 27.686884587085057;
+        this.lng = 85.34427752591353;
+      }
+
       // Set coordinates
-      let myLatlng = new google.maps.LatLng(this.lat, this.lng);
+      let myLatlng = new google.maps.LatLng(this.lng, this.lat);
       // Options
       let mapOptions = {
         zoom: 16,

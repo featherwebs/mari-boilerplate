@@ -243,8 +243,10 @@ window.pageapp  = new Vue({
         }
       });
     },
-    locationupdated(latlng, field) {
-      field.value = latlng.lng + ',' + latlng.lat;
+    locationupdated(latlng, slug, name) {
+      let value = latlng.lng + ',' + latlng.lat;
+      this.page.custom.find(c => c.slug== slug).value = value;
+      $('[name="'+ name+'"]').val(value);
     },
     addPostsRelation(slug, id, multiple) {
       var relatedPost = this.posts.find(p => p.id == id);
@@ -269,6 +271,21 @@ window.pageapp  = new Vue({
           });
         });
       }, 500);
+    },
+    getCustomValue(slug, def) {
+      if(def === undefined)
+        def = null;
+
+      let custom = this.page.custom.find(c => c.slug == slug);
+      if (custom)
+        return custom.value;
+
+
+      let posts = this.page.posts.filter(p => p.pivot.slug == slug);
+      if(posts.length)
+        return posts.map(p => p.id);
+
+      return def;
     }
   },
   components: {
