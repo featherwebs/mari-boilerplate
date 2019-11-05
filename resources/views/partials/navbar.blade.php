@@ -1,27 +1,16 @@
-<div class="navbar-wrapper">
-    <div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{ url('/') }}">{{ fw_setting('title') }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <nav class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">{{ fw_setting('title') }}</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        @if(fw_menu('main'))
-                            @foreach(fw_menu('main')->subMenus as $menu)
-                                <li><a href="{{ url($menu->url) }}">{{ $menu->title }}</a></li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            @if(fw_menu('main'))
+                @foreach(fw_menu('main')->subMenus as $menu)
+                    <li class="nav-item"><a href="{{ url($menu->url) }}">{{ $menu->title }}</a></li>
+                @endforeach
+            @endif
+        </ul>
     </div>
-</div>
+</nav>

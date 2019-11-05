@@ -6,7 +6,7 @@
   <section style="margin-top: 100px;padding-top: 30px;">
     <div class="container">
       <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-10 md-offset-1">
           <div class="row">
             <div class="col-sm-12">
               <h1>{!! $page->title !!}</h1>
