@@ -804,12 +804,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/featherwebs/mari.git",
-                "reference": "b926f3fc04b3e1bd964388f9d91c08b333062ea7"
+                "reference": "397774d2c5cdc2704622aa860f628e915753d0f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/featherwebs/mari/zipball/b926f3fc04b3e1bd964388f9d91c08b333062ea7",
-                "reference": "b926f3fc04b3e1bd964388f9d91c08b333062ea7",
+                "url": "https://api.github.com/repos/featherwebs/mari/zipball/397774d2c5cdc2704622aa860f628e915753d0f6",
+                "reference": "397774d2c5cdc2704622aa860f628e915753d0f6",
                 "shasum": ""
             },
             "require": {
@@ -850,7 +850,7 @@
                 "cms",
                 "laravel"
             ],
-            "time": "2019-08-29T09:39:52+00:00"
+            "time": "2019-11-24T10:45:33+00:00"
         },
         {
             "name": "fideloper/proxy",

@@ -5,7 +5,7 @@
  */
 import Ckeditor from './components/Ckeditor.vue';
 import ImageSelector from './components/ImageSelector.vue';
-import MapLocationSelector from './components/MapLocationSelector';
+import MapLocationSelector from './components/MapLocationSelector.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -216,7 +216,7 @@ window.pageapp  = new Vue({
       }));
     },
     removeImageField(obj) {
-      this.page.images = this.post.images.filter(i => i.id !== obj.id);
+      this.page.images = this.page.images.filter(i => i !== obj);
     },
     fillCustomFields() {
       let customData = [];

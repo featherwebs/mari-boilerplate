@@ -140,7 +140,7 @@ window.postapp = new Vue({
       }));
     },
     removeImageField(obj) {
-      this.post.images = this.post.images.filter(i => i.id !== obj.id);
+      this.post.images = this.post.images.filter(i => i !== obj);
     },
     locationupdated(latlng, slug, name) {
       let value = latlng.lng + ',' + latlng.lat;
@@ -165,7 +165,6 @@ window.postapp = new Vue({
       let custom = this.post.custom.find(c => c.slug == slug);
       if (custom)
         return custom.value;
-
 
       let posts = this.post.posts.filter(p => p.pivot.slug == slug);
       if(posts.length)
