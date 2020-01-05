@@ -3,9 +3,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import Ckeditor from './components/Ckeditor.vue';
 import ImageSelector from './components/ImageSelector.vue';
 import MapLocationSelector from './components/MapLocationSelector.vue';
+import {VueEditor} from "vue2-editor";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -130,7 +130,17 @@ window.pageapp  = new Vue({
     editor: {
       allowedContent: true,
       height: 500
-    }
+    },
+
+    customToolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{'align': []}],
+      ['blockquote', {'header': [1, 2, 3, 4, 5, 6, false]}],
+      [{'indent': '-1'}, {'indent': '+1'}],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      [{'font': []}],
+      [{'color': []}, {'background': []}],
+    ],
   },
   mounted() {
     // set the default post type
@@ -289,8 +299,8 @@ window.pageapp  = new Vue({
     }
   },
   components: {
-    Ckeditor,
     ImageSelector,
-    MapLocationSelector
+    MapLocationSelector,
+    VueEditor
   }
 });
