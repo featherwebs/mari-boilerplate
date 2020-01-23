@@ -43,15 +43,87 @@ let newPost = {
 };
 const createMode = typeof post === 'undefined';
 
+let customData = [];
+let imageData = [];
+let postTypeData = typeof post_type === 'undefined' ? null : post_type;
+let postData = createMode ? newPost : Object.assign({}, newPost, post);
+
+postTypeData.custom.map(field => {
+  let data = {...field, value: ""};
+  switch (field.type) {
+    case 'image':
+    case 'multiple-images':
+      let images = postData.images.filter(i => i.slug == field.slug || (i.pivot && (i.pivot.slug == field.slug)));
+      if (images.length) {
+        imageData.push(...images.map(i => ({thumbnail: '', url: '', ...field, ...i, slug: field.slug})));
+      } else {
+        imageData.push({...field, thumbnail: '', url: '', slug: field.slug});
+      }
+      break;
+    case 'map':
+      let mapData = postData.custom.find(p => field.slug == p.slug);
+      if (mapData) {
+        data = {
+          ...data,
+          ...mapData
+        }
+      } else {
+        data = {...data, value: ','};
+      }
+      customData.push(data);
+      break;
+    case 'post-type':
+      let cc = postData.posts.find(p => field.slug == p.pivot.slug);
+
+      if (cc) {
+        data = {
+          ...field,
+          ...cc,
+          slug: field.slug,
+          id: field.id,
+          value: cc.id
+        };
+      }
+      customData.push(data);
+      break;
+    case 'post-type-multiple':
+      let c = postData.posts.filter(p => field.slug == p.pivot.slug);
+      if (c.length) {
+        data = {
+          ...field,
+          ...c,
+          id: field.id,
+          value: c.map(c => c.id)
+        };
+      } else {
+        data = {...data, value: []}
+      }
+      customData.push(data);
+      break;
+    default:
+      let defaultData = postData.custom.find(p => field.slug == p.slug);
+      if (defaultData) {
+        data = {
+          ...data,
+          ...defaultData
+        };
+      }
+      customData.push(data);
+  }
+});
+postData.custom = customData;
+postData.images = imageData;
+
 window.postapp = new Vue({
   el: '#post-app',
   data: {
-    post_type: typeof post_type === 'undefined' ? null : post_type,
+    content: '',
+    post_type: postTypeData,
     post_types: typeof post_types === 'undefined' ? [] : post_types,
     posts: typeof posts === 'undefined' ? [] : posts,
     templates: typeof templates === 'undefined' ? [] : templates,
     tags: typeof tags === 'undefined' ? [] : tags,
-    post: createMode ? newPost : Object.assign({}, newPost, post),
+    post: postData,
     new_image: {
       pivot: {
         slug: ''
@@ -80,32 +152,6 @@ window.postapp = new Vue({
     ],
   },
   mounted() {
-    if (this.post_type) {
-      let customData = [];
-
-      this.post_type_non_images.map(field => {
-        if (this.post.custom.length) {
-          this.post.custom.map(postCustom => {
-            if (field.slug == postCustom.slug)
-              customData.push({...field, ...postCustom, id: field.id, title: field.title}); // id to preserve custom_field id in case of post_type type
-          });
-        } else {
-          if (field.slug == 'map')
-            customData.push({...field, value: ','});
-          else
-            customData.push({...field, value: ''});
-        }
-      });
-
-      this.post.custom = customData;
-
-      this.post_type_images.map(field => {
-        if (!this.post.images.filter(c => c.slug == field.slug || (c.pivot && (c.pivot.slug == field.slug))).length) {
-          field.thumbnail = null;
-          this.post.images.push(Object.assign({}, field));
-        }
-      });
-    }
   },
   watch: {
     'post.title': function (value) {
@@ -155,9 +201,9 @@ window.postapp = new Vue({
     },
     locationupdated(latlng, slug, name) {
       let value = latlng.lng + ',' + latlng.lat;
-      this.post.custom.find(c => c.slug== slug).value = value;
+      this.post.custom.find(c => c.slug == slug).value = value;
 
-      $('[name="'+ name+'"]').val(value);
+      $('[name="' + name + '"]').val(value);
     },
     addPostsRelation(slug, id, multiple) {
       var relatedPost = this.posts.find(p => p.id == id);
@@ -168,20 +214,6 @@ window.postapp = new Vue({
     },
     removePostsRelation(slug, id) {
       this.post.posts = this.post.posts.filter(p => p.pivot.slug == slug && p.id != id);
-    },
-    getCustomValue(slug, def) {
-      if(def === undefined)
-        def = null;
-
-      let custom = this.post.custom.find(c => c.slug == slug);
-      if (custom)
-        return custom.value;
-
-      let posts = this.post.posts.filter(p => p.pivot.slug == slug);
-      if(posts.length)
-        return posts.map(p => p.id);
-
-      return def;
     }
   },
   components: {

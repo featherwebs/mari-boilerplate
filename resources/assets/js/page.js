@@ -12,6 +12,7 @@ import {VueEditor} from "vue2-editor";
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
 const newPage = {
   title: '',
   sub_title: '',
@@ -108,10 +109,89 @@ const defaultPageType = {
     ]
 };
 
-window.pageapp  = new Vue({
+let pd = createMode ? newPage : Object.assign({}, newPage, page);
+
+function getPageData(pageData, pageType) {
+  let customData = [];
+  let imageData = [];
+
+  if(!pageType)
+    return pageData;
+
+  pageType.custom.map(field => {
+    let data = {...field, value: ""};
+    switch (field.type) {
+      case 'image':
+      case 'multiple-images':
+        let images = pageData.images.filter(i => i.slug == field.slug || (i.pivot && (i.pivot.slug == field.slug)));
+        if (images.length) {
+          imageData.push(...images.map(i => ({thumbnail: '', url: '', ...field, ...i, slug: field.slug})));
+        } else {
+          imageData.push({...field, thumbnail: '', url: '', slug: field.slug});
+        }
+        break;
+      case 'map':
+        let mapData = pageData.custom.find(p => field.slug == p.slug);
+        if (mapData) {
+          data = {
+            ...data,
+            ...mapData
+          }
+        } else {
+          data = {...data, value: ','};
+        }
+        customData.push(data);
+        break;
+      case 'post-type':
+        let cc = pageData.posts.find(p => field.slug == p.pivot.slug);
+
+        if (cc) {
+          data = {
+            ...field,
+            ...cc,
+            slug: field.slug,
+            id: field.id,
+            value: cc.id
+          };
+        }
+        customData.push(data);
+        break;
+      case 'post-type-multiple':
+        let c = pageData.posts.filter(p => field.slug == p.pivot.slug);
+        if (c.length) {
+          data = {
+            ...field,
+            ...c,
+            id: field.id,
+            value: c.map(c => c.id)
+          };
+        } else {
+          data = {...data, value: []}
+        }
+        customData.push(data);
+        break;
+      default:
+        let defaultData = pageData.custom.find(p => field.slug == p.slug);
+
+        if (defaultData) {
+          data = {
+            ...data,
+            ...defaultData
+          };
+        }
+        customData.push(data);
+    }
+  });
+  pageData.custom = customData;
+  pageData.images = imageData;
+
+  return pageData;
+}
+
+window.pageapp = new Vue({
   el: '#page-app',
   data: {
-    page: createMode ? newPage : Object.assign({}, newPage, page),
+    page: getPageData(pd, pd.page_type),
     page_types: [{...defaultPageType}, ...page_types],
     posts,
     new_image: {
@@ -147,9 +227,6 @@ window.pageapp  = new Vue({
     if (!this.page.page_type && this.page_types.length)
       this.page.page_type = this.page_types[0];
 
-    // fill the page custom data
-    this.fillCustomFields();
-
   },
   watch: {
     'page.title': function (value) {
@@ -163,8 +240,8 @@ window.pageapp  = new Vue({
       this.page.page_type = this.page_types.find(t => t.id == value);
     },
     'page.page_type': function (value) {
+      this.page = getPageData(this.page, value);
       this.page.view = value.id;
-      this.fillCustomFields();
       this.updateSelect2();
     }
   },
@@ -173,12 +250,7 @@ window.pageapp  = new Vue({
       if (this.page.page_type)
         return this.page.page_type.custom.filter(pt => pt.type == 'image' || pt.type == 'multiple-images');
       return [];
-    },
-    'page_type_non_images': function () {
-      if (this.page.page_type)
-        return this.page.page_type.custom.filter(pt => pt.type != 'image' && pt.type != 'multiple-images');
-      return [];
-    },
+    }
   },
   methods: {
     addCustomField() {
@@ -228,35 +300,10 @@ window.pageapp  = new Vue({
     removeImageField(obj) {
       this.page.images = this.page.images.filter(i => i !== obj);
     },
-    fillCustomFields() {
-      let customData = [];
-
-      this.page_type_non_images.map(field => {
-        if (this.page.custom.length) {
-          let pageCustom = this.page.custom.find(c => field.slug == c.slug)
-          customData.push({...field, ...pageCustom, id: field.id, title: field.title}); // id to preserve custom_field id in case of page_type type
-        } else {
-          if (field.slug == 'map')
-            customData.push({...field, value: ','});
-          else
-            customData.push({...field, value: ''});
-        }
-      });
-
-      this.page.custom = customData;
-
-      this.page_type_images.map(field => {
-        if (!this.page.images.filter(c => c.slug == field.slug || (c.pivot && (c.pivot.slug == field.slug))).length) {
-          field.thumbnail = null;
-          field.url = PLACEHOLDER;
-          this.page.images.push(Object.assign({}, field));
-        }
-      });
-    },
     locationupdated(latlng, slug, name) {
       let value = latlng.lng + ',' + latlng.lat;
-      this.page.custom.find(c => c.slug== slug).value = value;
-      $('[name="'+ name+'"]').val(value);
+      this.page.custom.find(c => c.slug == slug).value = value;
+      $('[name="' + name + '"]').val(value);
     },
     addPostsRelation(slug, id, multiple) {
       var relatedPost = this.posts.find(p => p.id == id);
@@ -283,7 +330,7 @@ window.pageapp  = new Vue({
       }, 500);
     },
     getCustomValue(slug, def) {
-      if(def === undefined)
+      if (def === undefined)
         def = null;
 
       let custom = this.page.custom.find(c => c.slug == slug);
@@ -292,7 +339,7 @@ window.pageapp  = new Vue({
 
 
       let posts = this.page.posts.filter(p => p.pivot.slug == slug);
-      if(posts.length)
+      if (posts.length)
         return posts.map(p => p.id);
 
       return def;
