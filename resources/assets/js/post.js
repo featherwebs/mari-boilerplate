@@ -55,7 +55,7 @@ postTypeData.custom.map(field => {
     case 'multiple-images':
       let images = postData.images.filter(i => i.slug == field.slug || (i.pivot && (i.pivot.slug == field.slug)));
       if (images.length) {
-        imageData.push(...images.map(i => ({thumbnail: '', url: '', ...field, ...i, slug: field.slug})));
+        imageData.push(...images.map(i => ({thumbnail: '', url: '', ...field, ...i, slug: field.slug, title: field.title})));
       } else {
         imageData.push({...field, thumbnail: '', url: '', slug: field.slug});
       }
@@ -65,10 +65,11 @@ postTypeData.custom.map(field => {
       if (mapData) {
         data = {
           ...data,
-          ...mapData
+          ...mapData,
+          title: field.title
         }
       } else {
-        data = {...data, value: ','};
+        data = {...data, value: ',', title: field.title};
       }
       customData.push(data);
       break;
@@ -81,7 +82,8 @@ postTypeData.custom.map(field => {
           ...cc,
           slug: field.slug,
           id: field.id,
-          value: cc.id
+          value: cc.id,
+          title: field.title
         };
       }
       customData.push(data);
@@ -93,10 +95,11 @@ postTypeData.custom.map(field => {
           ...field,
           ...c,
           id: field.id,
-          value: c.map(c => c.id)
+          value: c.map(c => c.id),
+          title: field.title
         };
       } else {
-        data = {...data, value: []}
+        data = {...data, value: [], title: field.title}
       }
       customData.push(data);
       break;
@@ -105,7 +108,8 @@ postTypeData.custom.map(field => {
       if (defaultData) {
         data = {
           ...data,
-          ...defaultData
+          ...defaultData,
+          title: field.title
         };
       }
       customData.push(data);

@@ -125,9 +125,9 @@ function getPageData(pageData, pageType) {
       case 'multiple-images':
         let images = pageData.images.filter(i => i.slug == field.slug || (i.pivot && (i.pivot.slug == field.slug)));
         if (images.length) {
-          imageData.push(...images.map(i => ({thumbnail: '', url: '', ...field, ...i, slug: field.slug})));
+          imageData.push(...images.map(i => ({thumbnail: '', url: '', ...field, ...i, slug: field.slug, title: field.title})));
         } else {
-          imageData.push({...field, thumbnail: '', url: '', slug: field.slug});
+          imageData.push({...field, thumbnail: '', url: '', slug: field.slug, title: field.title});
         }
         break;
       case 'map':
@@ -135,10 +135,11 @@ function getPageData(pageData, pageType) {
         if (mapData) {
           data = {
             ...data,
-            ...mapData
+            ...mapData,
+            title: field.title
           }
         } else {
-          data = {...data, value: ','};
+          data = {...data, value: ',', title: field.title};
         }
         customData.push(data);
         break;
@@ -151,7 +152,8 @@ function getPageData(pageData, pageType) {
             ...cc,
             slug: field.slug,
             id: field.id,
-            value: cc.id
+            value: cc.id,
+            title: field.title
           };
         }
         customData.push(data);
@@ -163,10 +165,11 @@ function getPageData(pageData, pageType) {
             ...field,
             ...c,
             id: field.id,
-            value: c.map(c => c.id)
+            value: c.map(c => c.id),
+            title: field.title
           };
         } else {
-          data = {...data, value: []}
+          data = {...data, value: [], title: field.title}
         }
         customData.push(data);
         break;
@@ -176,7 +179,8 @@ function getPageData(pageData, pageType) {
         if (defaultData) {
           data = {
             ...data,
-            ...defaultData
+            ...defaultData,
+            title: field.title
           };
         }
         customData.push(data);
