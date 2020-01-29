@@ -143,6 +143,7 @@ window.postapp = new Vue({
 
     customToolbar: [
       ['bold', 'italic', 'underline', 'strike'],
+      ['link'],
       [{'align': []}],
       ['blockquote', {'header': [1, 2, 3, 4, 5, 6, false]}],
       [{'indent': '-1'}, {'indent': '+1'}],
@@ -171,7 +172,7 @@ window.postapp = new Vue({
         return this.post_type.custom.filter(pt => pt.type == 'image' || pt.type == 'multiple-images');
       return [];
     },
-    'post_type_non_images': function () {
+    'post_type_p_images': function () {
       if (this.post_type)
         return this.post_type.custom.filter(pt => pt.type != 'image' && pt.type != 'multiple-images');
       return [];

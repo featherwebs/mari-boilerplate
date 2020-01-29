@@ -214,6 +214,7 @@ window.pageapp = new Vue({
 
     customToolbar: [
       ['bold', 'italic', 'underline', 'strike'],
+      ['link'],
       [{'align': []}],
       ['blockquote', {'header': [1, 2, 3, 4, 5, 6, false]}],
       [{'indent': '-1'}, {'indent': '+1'}],
